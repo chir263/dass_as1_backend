@@ -11,6 +11,7 @@ const authenticateUser = require("./middleware/authentication");
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
 const subgredditRouter = require("./routes/subgreddit");
+const postRouter = require("./routes/post");
 
 // error handler
 const notFoundMiddleware = require("./middleware/not-found");
@@ -19,13 +20,14 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("<h1>Greddit API</h1>");
+  res.send("<h1>Greddit DB API</h1>");
 });
 
 // routes
 app.use("/api/auth", authRouter);
 app.use("/api/user", authenticateUser, userRouter);
 app.use("/api/subgreddit", authenticateUser, subgredditRouter);
+app.use("/api/post", authenticateUser, postRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

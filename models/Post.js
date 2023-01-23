@@ -4,20 +4,19 @@ const PostSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Please provide subgreddit name"],
-      maxlength: 50,
+      required: [true, "Please provide post"],
+      maxlength: 5000,
     },
     posted_by: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
+      type: String,
+      required: [true, "Please provide user name"],
     },
     posted_in: {
-      type: mongoose.Types.ObjectId,
-      ref: "SubGreddit",
+      type: String,
+      required: [true, "Please provide subgreddit name"],
     },
     upvotes: {
       type: Number,
-      trim: true,
       default: 0,
     },
     downvotes: {

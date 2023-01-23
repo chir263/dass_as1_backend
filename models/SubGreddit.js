@@ -1,12 +1,5 @@
 const mongoose = require("mongoose");
 
-const DateStatsSchema = new mongoose.Schema({
-  date: { type: Date },
-  new_users: [String],
-  new_posts: [{ type: mongoose.Types.ObjectId, ref: "Post" }],
-  num_visits: [String],
-});
-
 const SubGredditSchema = new mongoose.Schema(
   {
     name: {
@@ -30,6 +23,16 @@ const SubGredditSchema = new mongoose.Schema(
     blocked: [{ type: String }],
     resquests: [{ type: String }],
     posts: [{ type: mongoose.Types.ObjectId, ref: "Post" }],
+    new_reports: [{ type: mongoose.Types.ObjectId, ref: "Report" }],
+    reports_resolved: [{ type: mongoose.Types.ObjectId, ref: "Report" }],
+    date_stats: [
+      {
+        date: { type: String },
+        new_users: [String],
+        new_posts: [{ type: mongoose.Types.ObjectId, ref: "Post" }],
+        num_visits: [String],
+      },
+    ],
   },
   { timestamps: true }
 );

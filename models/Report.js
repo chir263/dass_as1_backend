@@ -6,12 +6,10 @@ const ReportSchema = new mongoose.Schema(
       type: String,
     },
     reported_by: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
+      type: String,
     },
     reported_user: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
+      type: String,
     },
     posted_associated_with: {
       type: mongoose.Types.ObjectId,

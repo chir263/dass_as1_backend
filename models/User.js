@@ -45,7 +45,7 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Please provide password"],
-    minlength: 6,
+    minlength: 5,
   },
   saved_posts: [{ type: mongoose.Types.ObjectId, ref: "Post" }],
   followers: [{ type: String }],

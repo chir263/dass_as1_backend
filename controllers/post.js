@@ -16,12 +16,15 @@ const createPost = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ post });
 };
 const getPost = async (req, res) => {
+  // console.log("i am in post");
   const { post_id: post_id } = req.params;
   const post = await Post.findOne({ _id: post_id });
+  // console.log(post);
+
   const subg = await SubGreddit.findOne({
     name: post.posted_in,
   });
-  if (subg.blocked.includes(posted_by)) post.posted_by = "blocked_user";
+  if (subg.blocked.includes(post.posted_by)) post.posted_by = "blocked_user";
 
   let changed = false;
   let str = post.name;
@@ -46,6 +49,12 @@ const getPost = async (req, res) => {
       "this post contained some banned keywords which are replaced by *";
   }
 
+  res.status(200).json({ post });
+};
+
+const getPostUser = async (req, res) => {
+  const { user_name: user_name } = req.params;
+  const post = await Post.find({ posted_by: user_name });
   res.status(200).json({ post });
 };
 
@@ -101,4 +110,5 @@ module.exports = {
   createPost,
   getPost,
   updatePost,
+  getPostUser,
 };

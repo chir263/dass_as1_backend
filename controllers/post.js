@@ -15,7 +15,90 @@ const createPost = async (req, res) => {
   );
   res.status(StatusCodes.CREATED).json({ post });
 };
+const getPost = async (req, res) => {
+  const { post_id: post_id } = req.params;
+  const post = await Post.findOne({ _id: post_id });
+  const subg = await SubGreddit.findOne({
+    name: post.posted_in,
+  });
+  if (subg.blocked.includes(posted_by)) post.posted_by = "blocked_user";
+
+  let changed = false;
+  let str = post.name;
+
+  let banned_keywords = subg.banned_keywords;
+
+  String.prototype.replaceAll = function (strReplace, strWith) {
+    var esc = strReplace.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+    var reg = new RegExp(esc, "ig");
+    return this.replace(reg, strWith);
+  };
+  for (const word of banned_keywords) {
+    if (str.search(new RegExp("Ral", "i")) == -1) {
+      str = str.replaceAll(word, "*");
+      changed = true;
+    }
+  }
+  post.name = str;
+
+  if (changed) {
+    post.alert =
+      "this post contained some banned keywords which are replaced by *";
+  }
+
+  res.status(200).json({ post });
+};
+
+const updatePost = async (req, res) => {
+  const {
+    params: { post_id: post_id },
+    user: { user_name: user_name },
+    query: { op: op },
+  } = req;
+  if (op == "up") {
+    const post = await Post.findOneAndUpdate(
+      { _id: post_id },
+      {
+        $pull: { downvotes: user_name },
+        $addToSet: { upvotes: user_name },
+      }
+    );
+    return res
+      .status(200)
+      .json({ up: post.upvotes.length, down: post.downvotes.length });
+  } else if (op == "down") {
+    const post = await Post.findOneAndUpdate(
+      { _id: post_id },
+      {
+        $pull: { upvotes: user_name },
+        $addToSet: { downvotes: user_name },
+      }
+    );
+    return res
+      .status(200)
+      .json({ up: post.upvotes.length, down: post.downvotes.length });
+  } else if (op == "rup") {
+    const post = await Post.findOneAndUpdate(
+      { _id: post_id },
+      { $pull: { upvotes: user_name } }
+    );
+    return res
+      .status(200)
+      .json({ up: post.upvotes.length, down: post.downvotes.length });
+  } else if (op == "rdown") {
+    const post = await Post.findOneAndUpdate(
+      { _id: post_id },
+      { $pull: { downvotes: user_name } }
+    );
+    return res
+      .status(200)
+      .json({ up: post.upvotes.length, down: post.downvotes.length });
+  }
+  return res.status(400).json({ msg: "define op" });
+};
 
 module.exports = {
   createPost,
+  getPost,
+  updatePost,
 };

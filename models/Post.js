@@ -15,14 +15,8 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide subgreddit name"],
     },
-    upvotes: {
-      type: Number,
-      default: 0,
-    },
-    downvotes: {
-      type: Number,
-      default: 0,
-    },
+    upvotes: [String],
+    downvotes: [String],
   },
   { timestamps: true }
 );

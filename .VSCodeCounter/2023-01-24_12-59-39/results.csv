@@ -1,0 +1,28 @@
+"filename", "language", "JavaScript", "JSON", "comment", "blank", "total"
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/app.js", "JavaScript", 36, 0, 3, 12, 51
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/auth.js", "JavaScript", 32, 0, 1, 4, 37
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/post.js", "JavaScript", 73, 0, 0, 4, 77
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/report.js", "JavaScript", 66, 0, 0, 3, 69
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/subgreddit.js", "JavaScript", 198, 0, 5, 14, 217
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/user.js", "JavaScript", 153, 0, 0, 12, 165
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/db/connect.js", "JavaScript", 10, 0, 0, 3, 13
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/errors/bad-request.js", "JavaScript", 9, 0, 0, 3, 12
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/errors/custom-api.js", "JavaScript", 6, 0, 0, 2, 8
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/errors/index.js", "JavaScript", 10, 0, 0, 2, 12
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/errors/not-found.js", "JavaScript", 9, 0, 0, 3, 12
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/errors/unauthenticated.js", "JavaScript", 9, 0, 0, 3, 12
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/middleware/authentication.js", "JavaScript", 18, 0, 4, 5, 27
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/middleware/error-handler.js", "JavaScript", 25, 0, 1, 4, 30
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/middleware/not-found.js", "JavaScript", 2, 0, 0, 2, 4
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/Post.js", "JavaScript", 22, 0, 0, 3, 25
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/Report.js", "JavaScript", 33, 0, 0, 3, 36
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/SubGreddit.js", "JavaScript", 39, 0, 1, 4, 44
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/User.js", "JavaScript", 69, 0, 0, 6, 75
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/package-lock.json", "JSON", 0, 4173, 0, 1, 4174
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/package.json", "JSON", 0, 34, 0, 1, 35
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/auth.js", "JavaScript", 6, 0, 0, 2, 8
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/post.js", "JavaScript", 6, 0, 0, 4, 10
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/report.js", "JavaScript", 6, 0, 0, 4, 10
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/subgreddit.js", "JavaScript", 13, 0, 0, 4, 17
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/user.js", "JavaScript", 14, 0, 0, 4, 18
+"Total", "-", 864, 4207, 15, 112, 5198

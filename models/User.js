@@ -47,6 +47,7 @@ const UserSchema = new mongoose.Schema({
     required: [true, "Please provide password"],
     minlength: 6,
   },
+  saved_posts: [{ type: mongoose.Types.ObjectId, ref: "Post" }],
   followers: [{ type: String }],
   following: [{ type: String }],
 });

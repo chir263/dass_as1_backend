@@ -19,6 +19,8 @@ const getUser = async (req, res) => {
   tempUser.last_name = user.last_name;
   tempUser.user_name = user.user_name;
   tempUser.age = user.age;
+  tempUser.followers = user.followers;
+  tempUser.following = user.following;
   if (userId == user._id) {
     tempUser.contact_number = user.contact_number;
     tempUser.email = user.email;
@@ -26,9 +28,41 @@ const getUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ User: tempUser });
 };
 
-const updateUser = async (req, res) => {
+const getAllUser = async (req, res) => {
   const {
-    body: { first_name, last_name, email, age, contact_number },
+    user: { userId },
+  } = req;
+  const user = await User.findOne({
+    _id: userId,
+  });
+  const followers = user.followers;
+  const following = user.following;
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 5;
+  const skip = (page - 1) * limit;
+  // console.log(followers);
+  let result = User.find({});
+  result = result.skip(skip).limit(limit);
+  result = result.select(["first_name", "last_name", "user_name"]);
+  const users = await result;
+  let allUsers = users.map((user) => {
+    let user_ = {
+      user_name: user.user_name,
+      first_name: user.first_name,
+      last_name: user.last_name,
+    };
+    if (following.includes(user.user_name)) user_.following = true;
+    if (followers.includes(user.user_name)) user_.follower = true;
+    // console.log(user_);
+    return user_;
+  });
+  return res.status(StatusCodes.OK).json({ allUsers });
+};
+
+const updateUser = async (req, res) => {
+  // console.log("updateing user");
+  const {
+    body: { first_name, last_name, age, contact_number },
     user: { userId },
     params: { user_name: user_name },
   } = req;
@@ -36,13 +70,12 @@ const updateUser = async (req, res) => {
   if (
     first_name === "" ||
     last_name === "" ||
-    email === "" ||
     age === 0 ||
     contact_number === ""
   ) {
     throw new BadRequestError("fields cannot be empty");
   }
-  temUser = { first_name, last_name, email, age, contact_number };
+  temUser = { first_name, last_name, age, contact_number };
   const user = await User.findOneAndUpdate(
     { _id: userId, user_name: user_name },
     temUser
@@ -59,7 +92,16 @@ const followUser = async (req, res) => {
     params: { user_name: user_name },
   } = req;
   let follower_user = req.user.user_name;
-  const user1 = await User.findOneAndUpdate(
+  const user1 = await User.findOne({ _id: userId });
+
+  const user2 = await User.findOne({ user_name: user_name });
+  if (!user1) {
+    throw new NotFoundError(`No user with user name ${user_name}`);
+  }
+  if (!user2) {
+    throw new NotFoundError(`No user with user name ${follower_user}`);
+  }
+  await User.findOneAndUpdate(
     { _id: userId },
     {
       $addToSet: {
@@ -68,7 +110,7 @@ const followUser = async (req, res) => {
     }
   );
 
-  const user2 = await User.findOneAndUpdate(
+  await User.findOneAndUpdate(
     { user_name: user_name },
     {
       $addToSet: {
@@ -76,13 +118,7 @@ const followUser = async (req, res) => {
       },
     }
   );
-  if (!user1) {
-    throw new NotFoundError(`No user with user name ${user_name}`);
-  }
-  if (!user2) {
-    throw new NotFoundError(`No user with user name ${follower_user}`);
-  }
-  res
+  return res
     .status(StatusCodes.OK)
     .json({ follower: follower_user, following: user_name });
 };
@@ -155,10 +191,38 @@ const removeUser = async (req, res) => {
     .json({ removed: { following: follower_user, follower: user_name } });
 };
 
+const opPost = async (req, res) => {
+  const { post_id } = req.params;
+  const { op } = req.query;
+  if (op === "save") {
+    await User.findOneAndUpdate(
+      { user_name: req.user.user_name },
+      {
+        $addToSet: {
+          saved_posts: post_id,
+        },
+      }
+    );
+    res.status(StatusCodes.OK).json({ msg: "post saved" });
+  } else if (op === "remove") {
+    await User.findOneAndUpdate(
+      { user_name: req.user.user_name },
+      {
+        $pull: {
+          saved_posts: post_id,
+        },
+      }
+    );
+    res.status(StatusCodes.OK).json({ msg: "post removed" });
+  }
+};
+
 module.exports = {
   getUser,
   updateUser,
   followUser,
   unfollowUser,
   removeUser,
+  opPost,
+  getAllUser,
 };

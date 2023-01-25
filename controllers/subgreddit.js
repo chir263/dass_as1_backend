@@ -80,6 +80,7 @@ const createSubGreddit = async (req, res) => {
   req.user.visit_time = `${req.user.user_name} $ ${time}`;
   req.body.createdBy = req.user.user_name;
   req.body.followers = [req.user.user_name];
+  req.body.moderators = [req.user.user_name];
   req.body.date_stats = [
     {
       date: date,
@@ -88,7 +89,9 @@ const createSubGreddit = async (req, res) => {
       num_visits: [req.user.visit_time],
     },
   ];
+  // console.log(req.body);
   const subgreddit = await SubGreddit.create({ ...req.body });
+  // console.log("success");
   res.status(StatusCodes.CREATED).json({ subgreddit });
 };
 

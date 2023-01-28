@@ -70,6 +70,9 @@ const updatePost = async (req, res) => {
       {
         $pull: { downvotes: user_name },
         $addToSet: { upvotes: user_name },
+      },
+      {
+        new: true,
       }
     );
     return res
@@ -81,6 +84,9 @@ const updatePost = async (req, res) => {
       {
         $pull: { upvotes: user_name },
         $addToSet: { downvotes: user_name },
+      },
+      {
+        new: true,
       }
     );
     return res
@@ -89,7 +95,10 @@ const updatePost = async (req, res) => {
   } else if (op == "rup") {
     const post = await Post.findOneAndUpdate(
       { _id: post_id },
-      { $pull: { upvotes: user_name } }
+      { $pull: { upvotes: user_name } },
+      {
+        new: true,
+      }
     );
     return res
       .status(200)
@@ -97,7 +106,10 @@ const updatePost = async (req, res) => {
   } else if (op == "rdown") {
     const post = await Post.findOneAndUpdate(
       { _id: post_id },
-      { $pull: { downvotes: user_name } }
+      { $pull: { downvotes: user_name } },
+      {
+        new: true,
+      }
     );
     return res
       .status(200)

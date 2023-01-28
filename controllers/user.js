@@ -78,7 +78,10 @@ const updateUser = async (req, res) => {
   temUser = { first_name, last_name, age, contact_number };
   const user = await User.findOneAndUpdate(
     { _id: userId, user_name: user_name },
-    temUser
+    temUser,
+    {
+      new: true,
+    }
   );
   if (!user) {
     throw new NotFoundError(`No user with user name ${user_name}`);
@@ -107,6 +110,9 @@ const followUser = async (req, res) => {
       $addToSet: {
         following: user_name,
       },
+    },
+    {
+      new: true,
     }
   );
 
@@ -116,6 +122,9 @@ const followUser = async (req, res) => {
       $addToSet: {
         followers: follower_user,
       },
+    },
+    {
+      new: true,
     }
   );
   return res
@@ -135,6 +144,9 @@ const unfollowUser = async (req, res) => {
       $pull: {
         following: user_name,
       },
+    },
+    {
+      new: true,
     }
   );
 
@@ -144,6 +156,9 @@ const unfollowUser = async (req, res) => {
       $pull: {
         followers: follower_user,
       },
+    },
+    {
+      new: true,
     }
   );
   if (!user1) {
@@ -169,6 +184,9 @@ const removeUser = async (req, res) => {
       $pull: {
         followers: user_name,
       },
+    },
+    {
+      new: true,
     }
   );
 
@@ -178,6 +196,9 @@ const removeUser = async (req, res) => {
       $pull: {
         following: follower_user,
       },
+    },
+    {
+      new: true,
     }
   );
   if (!user1) {
@@ -201,6 +222,9 @@ const opPost = async (req, res) => {
         $addToSet: {
           saved_posts: post_id,
         },
+      },
+      {
+        new: true,
       }
     );
     res.status(StatusCodes.OK).json({ msg: "post saved" });

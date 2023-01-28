@@ -12,6 +12,9 @@ const createReport = async (req, res) => {
       $addToSet: {
         new_reports: report._id,
       },
+    },
+    {
+      new: true,
     }
   );
   res.status(StatusCodes.CREATED).json({ report });
@@ -43,16 +46,25 @@ const verdictReport = async (req, res) => {
         $pull: {
           followers: rep.reported_user,
         },
+        $inc: {
+          followers_num: -1,
+        },
         $addToSet: {
           blocked: rep.reported_user,
         },
+      },
+      {
+        new: true,
       }
     );
     res.status(StatusCodes.OK).json({ ...rep, verdict: "block_user" });
   } else if (verdict === "delete_post") {
     const rep = await Report.findOneAndUpdate(
       { _id: report_id },
-      { verdict: "delete_post" }
+      { verdict: "delete_post" },
+      {
+        new: true,
+      }
     );
     const subg = await SubGreddit.findOneAndUpdate(
       {
@@ -69,6 +81,9 @@ const verdictReport = async (req, res) => {
         $addToSet: {
           reports_resolved: report_id,
         },
+      },
+      {
+        new: true,
       }
     );
     await Post.findOneAndRemove({ _id: rep.post_associated_with });
@@ -76,7 +91,10 @@ const verdictReport = async (req, res) => {
   } else if (verdict === "ignore") {
     const rep = await Report.findOneAndUpdate(
       { _id: report_id },
-      { verdict: "ignore" }
+      { verdict: "ignore" },
+      {
+        new: true,
+      }
     );
     res.status(StatusCodes.OK).json({ ...rep, verdict: "ignore" });
   }

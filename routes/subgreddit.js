@@ -6,10 +6,14 @@ const {
   deleteSubGreddit,
   getSubGreddit,
   getAllSubgreddit,
+  getUserSubGreddit,
   opsSubGreddit,
+  searchSubgreddit,
 } = require("../controllers/subgreddit");
 
 router.route("/").post(createSubGreddit).get(getAllSubgreddit);
+router.route("/search").post(searchSubgreddit);
+router.route("/:user_name").get(getUserSubGreddit);
 router.route("/:subgreddit_name").delete(deleteSubGreddit).get(getSubGreddit);
 router.route("/:subgreddit_name/:ops").get(opsSubGreddit); // request, accept, reject
 

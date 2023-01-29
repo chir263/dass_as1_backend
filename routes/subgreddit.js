@@ -14,7 +14,10 @@ const {
 router.route("/").post(createSubGreddit).get(getAllSubgreddit);
 router.route("/search").post(searchSubgreddit);
 router.route("/:user_name").get(getUserSubGreddit);
-router.route("/:subgreddit_name").delete(deleteSubGreddit).get(getSubGreddit);
+router
+  .route("/sub/:subgreddit_name")
+  .delete(deleteSubGreddit)
+  .get(getSubGreddit);
 router.route("/:subgreddit_name/:ops").get(opsSubGreddit); // request, accept, reject
 
 module.exports = router;

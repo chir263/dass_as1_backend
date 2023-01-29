@@ -9,9 +9,11 @@ const {
   removeUser,
   opPost,
   getAllUser,
+  getUserList,
 } = require("../controllers/user");
 
 router.route("/").get(getAllUser);
+router.route("/").post(getUserList);
 router.route("/:user_name").get(getUser).patch(updateUser);
 router.route("/follow/:user_name").patch(followUser);
 router.route("/unfollow/:user_name").patch(unfollowUser);

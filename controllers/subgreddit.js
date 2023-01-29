@@ -145,6 +145,7 @@ const deleteSubGreddit = async (req, res) => {
 const getSubGreddit = async (req, res) => {
   const {
     params: { subgreddit_name: subgreddit_name },
+    user: { user_name },
   } = req;
 
   let subgreddit = await SubGreddit.findOne({
@@ -154,7 +155,15 @@ const getSubGreddit = async (req, res) => {
     throw new NotFoundError(`No subgreddit with name ${subgreddit_name}`);
   }
   const [date, time] = new Date().toISOString().split("T");
-  subgreddit.date_stats = "";
+  if (subgreddit.createdBy !== user_name) {
+    subgreddit.date_stats = "";
+    subgreddit.followers = "";
+    subgreddit.blocked = "";
+    subgreddit.resquests = "";
+    subgreddit.new_reports = "";
+    subgreddit.reports_resolved = "";
+    subgreddit.left = "";
+  }
   // adding visit
   addIntoDateStats(
     (subgreddit_name_ = subgreddit_name),
@@ -162,6 +171,7 @@ const getSubGreddit = async (req, res) => {
     (new_post = null),
     (new_visit = `${req.user.user_name} $ ${time}`)
   );
+  console.log(subgreddit_name, subgreddit);
   return res.status(StatusCodes.OK).json({ subgreddit });
 };
 

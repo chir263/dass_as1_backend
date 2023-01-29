@@ -241,6 +241,21 @@ const opPost = async (req, res) => {
   }
 };
 
+const getUserList = async (req, res) => {
+  const { userlist } = req.body;
+  let result = User.find({ user_name: { $in: userlist } });
+  result = result.select([
+    "first_name",
+    "last_name",
+    "user_name",
+    "followers",
+    "following",
+    "age",
+  ]);
+  let users = await result;
+  return res.status(StatusCodes.OK).json({ users });
+};
+
 module.exports = {
   getUser,
   updateUser,
@@ -249,4 +264,5 @@ module.exports = {
   removeUser,
   opPost,
   getAllUser,
+  getUserList,
 };

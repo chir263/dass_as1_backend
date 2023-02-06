@@ -28,10 +28,12 @@ const SubGredditSchema = new mongoose.Schema(
     new_reports: [{ type: mongoose.Types.ObjectId, ref: "Report" }],
     reports_resolved: [{ type: mongoose.Types.ObjectId, ref: "Report" }],
     moderators: [{ type: String }],
+    reports_num: { type: Number, default: 0 },
     date_stats: [
       {
         date: [String],
         new_users: [String],
+        left_users: [String],
         new_posts: [{ type: mongoose.Types.ObjectId, ref: "Post" }],
         num_visits: [String],
       },

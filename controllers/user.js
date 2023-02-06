@@ -24,6 +24,7 @@ const getUser = async (req, res) => {
   if (userId == user._id) {
     tempUser.contact_number = user.contact_number;
     tempUser.email = user.email;
+    tempUser.saved_posts = user.saved_posts;
   }
   res.status(StatusCodes.OK).json({ User: tempUser });
 };
@@ -81,6 +82,7 @@ const updateUser = async (req, res) => {
     temUser,
     {
       new: true,
+      runValidators: true,
     }
   );
   if (!user) {
@@ -229,14 +231,16 @@ const opPost = async (req, res) => {
     );
     res.status(StatusCodes.OK).json({ msg: "post saved" });
   } else if (op === "remove") {
-    await User.findOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       { user_name: req.user.user_name },
       {
         $pull: {
           saved_posts: post_id,
         },
-      }
+      },
+      { new: true }
     );
+    // console.log(req.user.user_name, post_id, user);
     res.status(StatusCodes.OK).json({ msg: "post removed" });
   }
 };

@@ -1,4 +1,4 @@
-let str = "vyom ke bhosDa mei Kabir ka lunD";
+let str = "vyom ke b mei Kabir ka f";
 
 let banned_keywords = ["mc", "lund", "lawda", "nigga", "bhosda"];
 String.prototype.replaceAll = function (strReplace, strWith) {
@@ -8,8 +8,9 @@ String.prototype.replaceAll = function (strReplace, strWith) {
 };
 for (const word of banned_keywords) {
   if (str.search(new RegExp("Ral", "i")) == -1) {
-    str = str.replaceAll(word, "*");
+    let tem = str.replaceAll(" " + word + " ", "*");
+    if (tem !== str) console.log("changing");
   }
 }
 
-// console.log(str);
+console.log(str);

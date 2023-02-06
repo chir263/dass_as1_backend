@@ -6,6 +6,10 @@ const ReportSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please provide concern"],
     },
+    selected_text: {
+      type: String,
+      required: [true, "Please provide selected text"],
+    },
     reported_by: {
       type: String,
       required: [true, "Please provide user"],

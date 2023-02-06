@@ -157,12 +157,8 @@ const getSubGreddit = async (req, res) => {
   const [date, time] = new Date().toISOString().split("T");
   if (subgreddit.createdBy !== user_name) {
     subgreddit.date_stats = "";
-    subgreddit.followers = "";
-    subgreddit.blocked = "";
-    subgreddit.resquests = "";
     subgreddit.new_reports = "";
     subgreddit.reports_resolved = "";
-    subgreddit.left = "";
   }
   // adding visit
   addIntoDateStats(
@@ -171,7 +167,7 @@ const getSubGreddit = async (req, res) => {
     (new_post = null),
     (new_visit = `${req.user.user_name} $ ${time}`)
   );
-  console.log(subgreddit_name, subgreddit);
+  // console.log(subgreddit_name, subgreddit);
   return res.status(StatusCodes.OK).json({ subgreddit });
 };
 
@@ -273,11 +269,20 @@ const opsSubGreddit = async (req, res) => {
     else return res.status(404).json({ msg: `${user} not found` });
   } else if (ops === "left") {
     if (!user) throw new BadRequestError("Specify user");
+    const [date, time] = new Date().toISOString().split("T");
+    // if (new_user) {
+    //   await SubGreddit.updateOne(
+    //     { name: subgreddit_name_ },
+    //     { $addToSet: { "date_stats.$[element].new_users": new_user } },
+    //     { arrayFilters: [{ "element.date": date }] }
+    //   );
+    // }
     const subgreddit = await SubGreddit.findOneAndUpdate(
       { name: subgreddit_name },
       {
         $addToSet: {
           left: user,
+          "date_stats.$[element].left_users": user,
         },
         $pull: {
           followers: user,
@@ -286,9 +291,7 @@ const opsSubGreddit = async (req, res) => {
           followers_num: -1,
         },
       },
-      {
-        new: true,
-      }
+      { arrayFilters: [{ "element.date": date }], new: true }
     );
     if (subgreddit) {
       return res
@@ -326,10 +329,10 @@ const searchSubgreddit = async (req, res) => {
       )
       .sort(sort);
   }
-  console.log(sort);
+  // console.log(sort);
   // console.log("search", search, "dsf");
   if (search) {
-    console.log(search);
+    // console.log(search);
     subgreddit = subgreddit.filter((sub) =>
       sub.name.toLowerCase().includes(search.toLowerCase())
     );
@@ -347,4 +350,5 @@ module.exports = {
   createDateStatIfNot,
   getUserSubGreddit,
   searchSubgreddit,
+  addIntoDateStats,
 };

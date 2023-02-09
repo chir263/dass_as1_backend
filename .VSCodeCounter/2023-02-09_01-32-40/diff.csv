@@ -1,0 +1,14 @@
+"filename", "language", "JavaScript", "JSON", "comment", "blank", "total"
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/post.js", "JavaScript", 42, 0, 1, 0, 43
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/report.js", "JavaScript", 51, 0, 8, 4, 63
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/subgreddit.js", "JavaScript", 11, 0, 7, 2, 20
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/user.js", "JavaScript", 2, 0, 1, 0, 3
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/Post.js", "JavaScript", 1, 0, 0, 0, 1
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/Report.js", "JavaScript", 4, 0, 0, 0, 4
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/SubGreddit.js", "JavaScript", 2, 0, 0, 0, 2
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/package-lock.json", "JSON", 0, 14, 0, 0, 14
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/package.json", "JSON", 0, 1, 0, 0, 1
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/post.js", "JavaScript", 2, 0, 0, 0, 2
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/report.js", "JavaScript", 3, 0, 0, 0, 3
+"/media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/subgreddit.js", "JavaScript", -2, 0, 0, 0, -2
+"Total", "-", 116, 15, 17, 6, 154

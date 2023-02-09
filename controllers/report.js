@@ -49,6 +49,7 @@ const verdictReport = async (req, res) => {
       { _id: report_id },
       { verdict: "block_user" }
     );
+    const [date, time] = new Date().toISOString().split("T");
     const subg = await SubGreddit.findOneAndUpdate(
       {
         name: rep.reported_in,
@@ -64,10 +65,11 @@ const verdictReport = async (req, res) => {
         },
         $addToSet: {
           blocked: rep.reported_user,
-          // reports_resolved: report_id,
+          "date_stats.$[element].left_users": rep.reported_user,
         },
       },
       {
+        arrayFilters: [{ "element.date": date }],
         new: true,
       }
     );
@@ -135,16 +137,18 @@ const getReport = async (req, res) => {
 
   let rep_to_be_deleted = [];
   for (const rep of reports) {
-    console.log(
-      rep._id,
-      new Date() - rep.createdAt,
-      msToHMS(new Date() - rep.createdAt)
-    );
+    // console.log(
+    //   rep._id,
+    //   new Date() - rep.createdAt,
+    //   msToHMS(new Date() - rep.createdAt)
+    // );
     if (new Date() - rep.createdAt > ten_day) {
       rep_to_be_deleted.push(rep._id);
     }
   }
-  // console.log(rep_to_be_deleted);
+  reports.filter((rep) => {
+    return !rep_to_be_deleted.includes(rep._id);
+  });
   if (rep_to_be_deleted?.length > 0) {
     await SubGreddit.findOneAndUpdate(
       { name: req.params.sub_name },
@@ -155,7 +159,6 @@ const getReport = async (req, res) => {
       }
     );
     await Report.deleteMany({ _id: { $in: rep_to_be_deleted } });
-    // console.log("deleted");
   }
   return res.status(StatusCodes.OK).json({ reports });
 };

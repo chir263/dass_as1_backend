@@ -50,7 +50,7 @@ const addIntoDateStats = async (
   new_post = null,
   new_visit = null
 ) => {
-  createDateStatIfNot(subgreddit_name_);
+  await createDateStatIfNot(subgreddit_name_);
   const [date, time] = new Date().toISOString().split("T");
   // console.log({ subgreddit_name_, new_user, new_post, new_visit });
   if (new_user) {
@@ -179,7 +179,7 @@ const getUserSubGreddit = async (req, res) => {
     createdBy: user_name,
   })
     .select(
-      "tags banned_keywords followers name description createdBy createdAt posts"
+      "tags banned_keywords followers name description createdBy createdAt posts followers_num"
     )
     .sort("-createdAt");
 
@@ -230,6 +230,7 @@ const opsSubGreddit = async (req, res) => {
         },
         $pull: {
           resquests: user,
+          blocked: user,
         },
         $inc: {
           followers_num: 1,
@@ -306,7 +307,7 @@ const searchSubgreddit = async (req, res) => {
   let {
     body: { tags, sort, search },
   } = req;
-  tags = tags?.split(",").map((tag) => tag.trim());
+  tags = tags?.split(",").map((tag) => tag.trim().toLowerCase());
   sort = sort
     ?.split(",")
     .map((tag) => tag.trim())
@@ -316,6 +317,11 @@ const searchSubgreddit = async (req, res) => {
   // console.log(sort);
   sort = sort.replace("-followers", "-followers_num");
   let subgreddit = {};
+
+  function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  }
+
   if (!tags || (tags && !tags[0])) {
     subgreddit = await SubGreddit.find({})
       .select(
@@ -323,7 +329,13 @@ const searchSubgreddit = async (req, res) => {
       )
       .sort(sort);
   } else {
-    subgreddit = await SubGreddit.find({ tags: { $in: tags } })
+    subgreddit = await SubGreddit.find({
+      tags: {
+        $in: tags.map((tag) => {
+          return new RegExp(escapeRegex(tag), "gi");
+        }),
+      },
+    })
       .select(
         "tags banned_keywords followers followers_num name description createdBy createdAt posts"
       )

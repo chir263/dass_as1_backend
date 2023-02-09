@@ -1,0 +1,59 @@
+Date : 2023-02-09 01:32:40
+Directory : /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend
+Total : 27 files,  5590 codes, 55 comments, 132 blanks, all 5777 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          2 |      4,222 |          0 |          2 |      4,224 |
+| JavaScript |         25 |      1,368 |         55 |        130 |      1,553 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                               | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                  |         27 |      5,590 |         55 |        132 |      5,777 |
+| . (Files)                                                                          |          3 |      4,260 |          3 |         13 |      4,276 |
+| controllers                                                                        |          6 |        971 |         42 |         59 |      1,072 |
+| db                                                                                 |          1 |         10 |          0 |          3 |         13 |
+| errors                                                                             |          5 |         43 |          0 |         13 |         56 |
+| middleware                                                                         |          3 |         46 |          9 |         10 |         65 |
+| models                                                                             |          4 |        187 |          1 |         16 |        204 |
+| routes                                                                             |          5 |         73 |          0 |         18 |         91 |
++------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                           | language   | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/app.js                       | JavaScript |         38 |          3 |         11 |         52 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/auth.js          | JavaScript |         32 |          1 |          4 |         37 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/post.js          | JavaScript |        189 |          8 |         11 |        208 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/report.js        | JavaScript |        155 |          8 |          7 |        170 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/subgreddit.js    | JavaScript |        328 |         21 |         18 |        367 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/test.js          | JavaScript |         14 |          0 |          3 |         17 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/controllers/user.js          | JavaScript |        253 |          4 |         16 |        273 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/db/connect.js                | JavaScript |         10 |          0 |          3 |         13 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/errors/bad-request.js        | JavaScript |          9 |          0 |          3 |         12 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/errors/custom-api.js         | JavaScript |          6 |          0 |          2 |          8 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/errors/index.js              | JavaScript |         10 |          0 |          2 |         12 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/errors/not-found.js          | JavaScript |          9 |          0 |          3 |         12 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/errors/unauthenticated.js    | JavaScript |          9 |          0 |          3 |         12 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/middleware/authentication.js | JavaScript |         19 |          7 |          5 |         31 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/middleware/error-handler.js  | JavaScript |         25 |          2 |          3 |         30 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/middleware/not-found.js      | JavaScript |          2 |          0 |          2 |          4 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/Post.js               | JavaScript |         37 |          0 |          3 |         40 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/Report.js             | JavaScript |         37 |          0 |          3 |         40 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/SubGreddit.js         | JavaScript |         43 |          1 |          4 |         48 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/models/User.js               | JavaScript |         70 |          0 |          6 |         76 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/package-lock.json            | JSON       |      4,187 |          0 |          1 |      4,188 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/package.json                 | JSON       |         35 |          0 |          1 |         36 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/auth.js               | JavaScript |          6 |          0 |          2 |          8 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/post.js               | JavaScript |         18 |          0 |          4 |         22 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/report.js             | JavaScript |         11 |          0 |          4 |         15 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/subgreddit.js         | JavaScript |         18 |          0 |          4 |         22 |
+| /media/chirag/DATA/CODE_AMA/dass/assignment 1/backend/routes/user.js               | JavaScript |         20 |          0 |          4 |         24 |
+| Total                                                                              |            |      5,590 |         55 |        132 |      5,777 |
++------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

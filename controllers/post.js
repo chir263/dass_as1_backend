@@ -17,14 +17,11 @@ const filter = (post, banned_keywords) => {
         till.push("*");
         c = 1;
         break;
-        // console.log("aabskdbs", str);
       }
     }
     if (!c) till.push(str);
   }
-  // console.log(till);
   if (changed) {
-    // console.log(post.name, "changing");
     post.alert =
       "this post contained some banned keywords which are replaced by *";
     post.name = till.join(" ");
@@ -70,7 +67,7 @@ const getPost = async (req, res) => {
 
 const getPostUser = async (req, res) => {
   const { user_name: user_name } = req.params;
-  let post = await Post.find({ posted_by: user_name });
+  let post = await Post.find({ posted_by: user_name }).sort("-createdAt");
   // console.log(post);
 
   for (p of post) {
@@ -142,7 +139,13 @@ const updatePost = async (req, res) => {
 
 const getPostSub = async (req, res) => {
   const { subgreddit_name: subgreddit_name } = req.params;
-  const posts = await Post.find({ posted_in: subgreddit_name });
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 5;
+  const skip = (page - 1) * limit;
+  const posts = await Post.find({ posted_in: subgreddit_name })
+    .sort("-createdAt")
+    .skip(skip)
+    .limit(limit);
   const subg = await SubGreddit.findOne({ name: subgreddit_name });
   for (post of posts) {
     post = filter(post, post.banned_keywords);
@@ -157,7 +160,7 @@ const getPostSub = async (req, res) => {
 const getSavedPost = async (req, res) => {
   const user = await User.findOne({ user_name: req.user.user_name });
   let pp = user.saved_posts;
-  const posts = await Post.find({ _id: { $in: pp } });
+  const posts = await Post.find({ _id: { $in: pp } }).sort("-createdAt");
   for (post of posts) {
     post = filter(post, post.banned_keywords);
   }

@@ -1,4 +1,5 @@
 const SubGreddit = require("../models/SubGreddit");
+const Comment = require("../models/Comment");
 const Post = require("../models/Post");
 const { StatusCodes } = require("http-status-codes");
 const {
@@ -139,6 +140,7 @@ const deleteSubGreddit = async (req, res) => {
       _id: post_id,
     });
   });
+  await Comment.deleteMany({ commented_in: subgreddit_name });
   res.status(StatusCodes.OK).json({ msg: `deleted ${subgreddit.name}` });
 };
 
@@ -187,11 +189,16 @@ const getUserSubGreddit = async (req, res) => {
 };
 
 const getAllSubgreddit = async (req, res) => {
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 6;
+  const skip = (page - 1) * limit;
   const subgreddit = await SubGreddit.find({})
     .select(
       "tags banned_keywords followers followers_num name description createdBy createdAt posts"
     )
-    .sort("-createdAt");
+    .sort("-createdAt")
+    .skip(skip)
+    .limit(limit);
   // subgreddits = subgreddit.map((sub) => sub.name);
   res.status(200).json({ subgreddit });
 };
@@ -304,6 +311,9 @@ const opsSubGreddit = async (req, res) => {
 };
 
 const searchSubgreddit = async (req, res) => {
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 6;
+  const skip = (page - 1) * limit;
   let {
     body: { tags, sort, search },
   } = req;
@@ -314,8 +324,10 @@ const searchSubgreddit = async (req, res) => {
     .join(" ");
   search = search?.trim();
   sort = sort || "-createdAt";
-  // console.log(sort);
-  sort = sort.replace("-followers", "-followers_num");
+  sort = sort.replace("followers", "-followers_num");
+  sort = sort.replace("createdAt", "-createdAt");
+  sort = sort.replace("name (a)", "name");
+  sort = sort.replace("name (d)", "-name");
   let subgreddit = {};
 
   function escapeRegex(text) {
@@ -323,11 +335,15 @@ const searchSubgreddit = async (req, res) => {
   }
 
   if (!tags || (tags && !tags[0])) {
-    subgreddit = await SubGreddit.find({})
+    subgreddit = await SubGreddit.find({
+      name: { $regex: search, $options: "i" },
+    })
       .select(
         "tags banned_keywords followers followers_num name description createdBy createdAt posts"
       )
-      .sort(sort);
+      .sort(sort)
+      .skip(skip)
+      .limit(limit);
   } else {
     subgreddit = await SubGreddit.find({
       tags: {
@@ -335,22 +351,16 @@ const searchSubgreddit = async (req, res) => {
           return new RegExp(escapeRegex(tag), "gi");
         }),
       },
+      name: { $regex: search, $options: "i" },
     })
       .select(
         "tags banned_keywords followers followers_num name description createdBy createdAt posts"
       )
-      .sort(sort);
-  }
-  // console.log(sort);
-  // console.log("search", search, "dsf");
-  if (search) {
-    // console.log(search);
-    subgreddit = subgreddit.filter((sub) =>
-      sub.name.toLowerCase().includes(search.toLowerCase())
-    );
+      .sort(sort)
+      .skip(skip)
+      .limit(limit);
   }
   return res.status(StatusCodes.OK).json({ subgreddit });
-  // return res.send("sadfaf");
 };
 
 module.exports = {

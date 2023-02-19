@@ -11,7 +11,8 @@ const {
   searchSubgreddit,
 } = require("../controllers/subgreddit");
 
-router.route("/").post(createSubGreddit).get(getAllSubgreddit);
+router.route("/").post(createSubGreddit);
+// .get(getAllSubgreddit);
 router.route("/search").post(searchSubgreddit);
 router.route("/:user_name").get(getUserSubGreddit);
 router.route("/sub/:subgreddit_name").post(deleteSubGreddit).get(getSubGreddit);

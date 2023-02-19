@@ -11,7 +11,7 @@ const SubGredditSchema = new mongoose.Schema(
     description: {
       type: String,
       required: [true, "Please provide subgreddit description"],
-      maxlength: 1000,
+      maxlength: 10000,
     },
     createdBy: {
       type: String,

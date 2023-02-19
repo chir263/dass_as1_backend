@@ -170,29 +170,6 @@ const getSavedPost = async (req, res) => {
   res.status(200).json({ post: posts });
 };
 
-const addComment = async (req, res) => {
-  // console.log("i am here");
-  await Post.updateOne(
-    { _id: req.params.post_id },
-    {
-      $addToSet: {
-        comments: {
-          user_name: req.user.user_name,
-          comment: req.body.comment,
-          createdAt: new Date(),
-        },
-      },
-    }
-  );
-  return res.status(200).json({
-    comment: {
-      user_name: req.user.user_name,
-      comment: req.body.comment,
-      createdAt: new Date(),
-    },
-  });
-};
-
 module.exports = {
   createPost,
   getPost,
@@ -200,5 +177,4 @@ module.exports = {
   getPostUser,
   getPostSub,
   getSavedPost,
-  addComment,
 };

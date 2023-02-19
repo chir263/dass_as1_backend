@@ -25,13 +25,13 @@ const PostSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    comments: [
-      {
-        user_name: String,
-        comment: String,
-        createdAt: { type: Date },
-      },
-    ],
+    // comments: [
+    //   {
+    //     user_name: String,
+    //     comment: String,
+    //     createdAt: { type: Date },
+    //   },
+    // ],
   },
   { timestamps: true }
 );
